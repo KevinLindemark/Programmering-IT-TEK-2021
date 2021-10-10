@@ -1,11 +1,8 @@
 # Importere library til at forbinde til adafruit.io
 import mqttBotPubSub
 lib = mqttBotPubSub
-import time
 while True:
     try:
-        time.sleep(1)
-        print(lib.m)
         # lib.m vil indholde strengen som indtastes i feltet "skriv til Jarvis"
         # Hvis strengen er identisk med "Streng til Bot" køres koden i if sætningen
         if lib.m == "streng til bot":
