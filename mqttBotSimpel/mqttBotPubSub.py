@@ -14,13 +14,11 @@ m = ""
 # called when subscribed data is received
 def cb(topic, msg):
     if topic == mqtt_sub_feedname:
-        print(msg.decode('utf8'))
-        x = str(msg)
-        y = x[2: -1]
         global m
-        m = y.lower()
-
-
+        m = msg.decode('utf-8')
+        # print (m)
+        m = m.lower()
+        print(m)
 # WiFi connection information
 WIFI_SSID = credentials["ssid"]
 WIFI_PASSWORD = credentials["password"]
@@ -72,15 +70,12 @@ try:
 except Exception as e:
     print('could not connect to MQTT server {}{}'.format(type(e).__name__, e))
     sys.exit()
-
-# publish free heap statistics to Adafruit IO using MQTT
-# subscribe to the same feed
-#
-# format of feed name:
-#   "ADAFRUIT_USERNAME/feeds/ADAFRUIT_IO_FEEDNAME"
-mqtt_pub_feedname = bytes('{:s}/feeds/{:s}'.format(ADAFRUIT_USERNAME,
-ADAFRUIT_IO_PUB_FEEDNAME), 'utf-8')
-mqtt_sub_feedname = bytes('{:s}/feeds/{:s}'.format(ADAFRUIT_USERNAME,
-ADAFRUIT_IO_SUB_FEEDNAME), 'utf-8')
+    # publish free heap statistics to Adafruit IO using MQTT
+    # subscribe to the same feed
+    #
+    # format of feed name:
+    #   "ADAFRUIT_USERNAME/feeds/ADAFRUIT_IO_FEEDNAME"
+mqtt_pub_feedname = bytes('{:s}/feeds/{:s}'.format(ADAFRUIT_USERNAME, ADAFRUIT_IO_PUB_FEEDNAME), 'utf-8')
+mqtt_sub_feedname = bytes('{:s}/feeds/{:s}'.format(ADAFRUIT_USERNAME, ADAFRUIT_IO_SUB_FEEDNAME), 'utf-8')
 client.set_callback(cb)
 client.subscribe(mqtt_sub_feedname)
